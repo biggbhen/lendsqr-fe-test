@@ -1,0 +1,75 @@
+.formContainer {
+	// border: 1px solid red;
+	height: 100%;
+	display: flex;
+	align-items: center;
+
+	span {
+		display: block;
+		margin-bottom: 1.5rem;
+		margin-top: 5px;
+	}
+	form {
+		// display: block;
+		margin: auto;
+		width: 60%;
+		// border: 1px solid red;
+	}
+	input {
+		display: block;
+		width: calc(100% - 15px);
+		padding: 15px 0;
+		padding-left: 15px;
+		font-size: clamp(0.95rem, 1.5vw, 1rem);
+		outline: 0;
+		background: #ffffff;
+		border: 2px solid rgba(84, 95, 125, 0.15);
+		border-radius: 5px;
+	}
+	@media (max-width: 1070px) {
+		form {
+			width: 70%;
+		}
+	}
+	@media (max-width: 800px) {
+		form {
+			width: 65%;
+		}
+	}
+	@media (max-width: 450px) {
+		form {
+			width: 70%;
+		}
+	}
+}
+
+.email {
+	margin-top: 2rem;
+}
+
+.passwordInput {
+	position: relative;
+	// border: 1px solid red;
+	width: 100%;
+}
+
+.passwordInput .show {
+	font-size: clamp(0.95rem, 1.5vw, 1rem);
+	color: rgba(57, 205, 204, 1);
+	top: 50%;
+	transform: translateY(-50%);
+	position: absolute;
+	right: 15px;
+}
+
+.button {
+	width: 100%;
+	background: #39cdcc;
+	border-radius: 8px;
+	border: 0;
+	padding: 15px 0;
+	color: #ffffff;
+	margin-top: 1.5rem;
+	font-size: clamp(0.95rem, 1.5vw, 1rem);
+	letter-spacing: 0.7px;
+}
