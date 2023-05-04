@@ -34,9 +34,13 @@
 	li {
 		display: flex;
 		align-items: center;
+		padding: 10px 0;
 		padding-left: 30px;
-		// font-weight: 400;
 		font-size: 1rem;
+		cursor: pointer;
+		&:hover {
+			background: rgba(155, 168, 196, 0.3);
+		}
 
 		.briefcase,
 		.homeIcon {
@@ -55,13 +59,16 @@
 .customers_section {
 	// border: 1px solid red;
 	li {
-		padding: 5px 0;
+		padding: 10px 0;
 		margin: 10px 0;
 		display: flex;
 		align-items: center;
 		padding-left: 30px;
-		// font-weight: 400;
+		cursor: pointer;
 		font-size: 1rem;
+		&:hover {
+			background: rgba(155, 168, 196, 0.3);
+		}
 
 		.icon {
 			margin-right: 10px;
@@ -79,14 +86,18 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+
 	li {
-		padding: 5px 0;
+		padding: 15px 0;
 		margin: 10px 0;
 		display: flex;
 		align-items: center;
 		padding-left: 30px;
-		// font-weight: 400;
+		cursor: pointer;
 		font-size: 1rem;
+		&:hover {
+			background: rgba(155, 168, 196, 0.3);
+		}
 
 		.icon {
 			margin-right: 10px;
@@ -96,4 +107,10 @@
 			}
 		}
 	}
+}
+
+.nav_active {
+	background: rgba(57, 205, 204, 0.06);
+	border-left: 3px solid #39cdcc;
+	padding-left: 27px;
 }

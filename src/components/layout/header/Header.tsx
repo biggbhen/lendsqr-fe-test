@@ -40,7 +40,12 @@ const Header = () => {
 						<img src={userIcon} alt='arrow-down' className='userIcon' />
 					</li>
 					<li>
-						Adedeji <img src={arrowdown} alt='arrow-down' />
+						Adedeji{' '}
+						<img
+							src={arrowdown}
+							alt='arrow-down'
+							style={{ marginLeft: '5px' }}
+						/>
 					</li>
 				</ul>
 			</nav>

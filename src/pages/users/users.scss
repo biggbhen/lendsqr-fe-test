@@ -1,0 +1,21 @@
+.user_container {
+	// border: 1px solid red;
+	max-width: calc(100% - 270px);
+	margin-top: 5.8125rem;
+	margin-left: 270px;
+	min-height: 100vh;
+	padding: 50px;
+	* {
+		font-family: 'Work Sans';
+		font-weight: 500;
+	}
+	.topic {
+		color: #213f7d;
+		font-size: 1.8rem;
+	}
+}
+
+.userTypes {
+	margin: 40px 0;
+	border: 1px solid red;
+}

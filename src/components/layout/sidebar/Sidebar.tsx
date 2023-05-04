@@ -1,4 +1,4 @@
-// import React from 'react'
+import { useEffect, useRef, useState } from 'react';
 import './sidebar.scss';
 import briefcase from '../../../assets/briefcase.svg';
 import angledown from '../../../assets/angleDown.svg';
@@ -23,6 +23,7 @@ import badgeIcon from '../../../assets/badge.svg';
 import clipboardIcon from '../../../assets/clipboard.svg';
 import tireIcon from '../../../assets/tire.svg';
 import logIcon from '../../../assets/sign-out.svg';
+import { useNavigate } from 'react-router-dom';
 // type Props = {}
 const customersList = [
 	{ name: 'Users', icon: userIcon },
@@ -53,6 +54,28 @@ const settingsList = [
 ];
 
 const Sidebar = () => {
+	const myRef = useRef<HTMLLIElement>(null);
+	const navigate = useNavigate();
+	const [path, setPath] = useState<string | undefined>('dashboard');
+	const [active, setActive] = useState<string>('');
+
+	const handleClick = () => {
+		const text: string | undefined = myRef.current?.innerText;
+		setPath(text);
+	};
+
+	useEffect(() => {
+		if (
+			typeof path === 'string' &&
+			location.pathname.includes(path.toLowerCase())
+		) {
+			setActive('nav_active');
+			navigate(`/${path.toLowerCase()}`);
+		}
+
+		// eslint-disable-next-line
+	}, [location.pathname]);
+
 	return (
 		<div className='sidebar_container'>
 			<ul className='personal'>
@@ -60,16 +83,16 @@ const Sidebar = () => {
 					<div className='briefcase'>
 						<img src={briefcase} alt='briefcase' />
 					</div>
-					<div>Switch Organization</div>
+					Switch Organization
 					<div className='angledown'>
 						<img src={angledown} alt='angle down' />
 					</div>
 				</li>
-				<li>
+				<li ref={myRef} onClick={() => handleClick()} className={active}>
 					<div className='homeIcon'>
 						<img src={home} alt='home' />
 					</div>
-					<div>Dashboard</div>
+					Dashboard
 				</li>
 			</ul>
 			<h2>CUSTOMERS</h2>
