@@ -3,8 +3,10 @@
 	max-width: calc(100% - 270px);
 	margin-top: 5.8125rem;
 	margin-left: 270px;
-	min-height: 100vh;
+	min-height: calc(205vh + 45px);
 	padding: 50px;
+	background: #fbfbfb;
+
 	* {
 		font-family: 'Work Sans';
 		font-weight: 500;
@@ -17,5 +19,5 @@
 
 .userTypes {
 	margin: 40px 0;
-	border: 1px solid red;
+	// border: 1px solid red;
 }

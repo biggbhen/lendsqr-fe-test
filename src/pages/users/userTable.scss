@@ -1,0 +1,36 @@
+.userList_container {
+	background-color: #fff;
+	box-shadow: 0px 0px 1px 1px rgba(33, 63, 125, 0.1);
+	-webkit-box-shadow: 0px 0px 1px 1px rgba(33, 63, 125, 0.1);
+	-moz-box-shadow: 0px 0px 1px 1px rgba(33, 63, 125, 0.1);
+	padding: 20px;
+	border-radius: 2px;
+	overflow: auto;
+}
+.headings_list {
+	display: flex;
+	justify-content: space-between;
+	// overflow: auto;
+	.headings {
+		display: flex;
+		align-items: center;
+		font-weight: 600;
+		font-size: 0.8rem;
+		color: #545f7d;
+		border: 1px solid red;
+		// width: 15%;
+		margin-right: 10px;
+		white-space: nowrap;
+		img {
+			margin-left: 5px;
+		}
+	}
+
+	.status {
+		margin-right: 0;
+	}
+	.list {
+		padding: 10px 0;
+		border-bottom: 1px solid #e9ecf2;
+	}
+}
