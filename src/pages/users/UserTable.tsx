@@ -8,6 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import verticalMenu from '../../assets/verticalmenu.svg';
 import PaginationXD from '../../components/pagination/PaginationXD';
+import axios from 'axios';
 
 function createData(
 	org: string,
@@ -20,50 +21,53 @@ function createData(
 	return { org, username, email, phone, date_joined, status };
 }
 
-const users = [
-	createData(
-		'Lendsqr',
-		'Adedeji',
-		'adedeji@lendsqr.com',
-		'08078903721',
-		'May 15, 2020 10:00 AM',
-		'Inactive'
-	),
-	createData(
-		'Irorun',
-		'Debby Ogana',
-		'debby2@irorun.com',
-		'08078903721',
-		'May 30, 2020 10:00 AM',
-		'Pending'
-	),
-	createData(
-		'Irorun',
-		'Debby Ogana',
-		'debby2@irorun.com',
-		'08078903721',
-		'May 30, 2020 10:00 AM',
-		'Pending'
-	),
-	createData(
-		'Irorun',
-		'Debby Ogana',
-		'debby2@irorun.com',
-		'08078903721',
-		'May 30, 2020 10:00 AM',
-		'Pending'
-	),
-];
-
 // console.log();
 
 export default function UserTable() {
-	const [currentPage, setCurrentPage] = React.useState(1);
-	const [postsPerPage] = React.useState(2);
+	const [usersdata, setUsersData] = React.useState([]) as any;
+	const [loading, setLoading] = React.useState<null | string>(null);
 
+	const getUsers = async () => {
+		try {
+			const response = await axios.get(
+				' https://6270020422c706a0ae70b72c.mockapi.io/lendsqr/api/v1/users '
+			);
+			if (response.status && response.status === 200) {
+				setUsersData(response.data);
+				setLoading('successful');
+				return response.data;
+			}
+		} catch (error) {
+			console.error('Error fetching data:', error);
+			throw error;
+		}
+	};
+
+	React.useEffect(() => {
+		getUsers();
+	}, []);
+
+	const options: any = {
+		year: 'numeric',
+		month: 'long',
+		day: 'numeric',
+		hour: 'numeric',
+		minute: 'numeric',
+		second: 'numeric',
+		hour12: false,
+		timeZone: 'America/New_York',
+	};
+
+	console.log(usersdata, loading);
+	console.log(
+		new Date('2072-12-27T03:44:22.522Z').toLocaleString('en-US', options)
+	);
+
+	const [currentPage, setCurrentPage] = React.useState(1);
+	const [postsPerPage] = React.useState(10);
 	const indexOfLastUser = currentPage * postsPerPage;
 	const indexOfFirstUser = indexOfLastUser - postsPerPage;
-	const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+	const currentUsers = usersdata.slice(indexOfFirstUser, indexOfLastUser);
 	const paginate = (value: number) => {
 		setCurrentPage(value);
 	};
@@ -135,115 +139,117 @@ export default function UserTable() {
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{currentUsers.map((user, index) => (
-						<TableRow
-							key={index}
-							sx={{
-								'&:last-child td, &:last-child th': { border: 0 },
-							}}>
-							<TableCell
+					{loading === 'successful' &&
+						usersdata.length > 0 &&
+						currentUsers.map((user: any) => (
+							<TableRow
+								key={user.id}
 								sx={{
-									width: 'max-content',
-									fontFamily: 'Work Sans',
-									fontWeight: '400',
-									whiteSpace: 'nowrap',
-									fontSize: '0.8rem',
+									'&:last-child td, &:last-child th': { border: 0 },
 								}}>
-								{user.org}
-							</TableCell>
-							<TableCell
-								// align='center'
-								sx={{
-									width: 'max-content',
-									fontFamily: 'Work Sans',
-									fontWeight: '400',
-									whiteSpace: 'nowrap',
-									fontSize: '0.8rem',
-								}}>
-								{user.username}
-							</TableCell>
-							<TableCell
-								// align='center'
-								sx={{
-									width: 'max-content',
-									fontFamily: 'Work Sans',
-									fontWeight: '400',
-									whiteSpace: 'nowrap',
-									fontSize: '0.8rem',
-								}}>
-								{user.email}
-							</TableCell>
-							<TableCell
-								// align='center'
-								sx={{
-									width: 'max-content',
-									fontFamily: 'Work Sans',
-									fontWeight: '400',
-									whiteSpace: 'nowrap',
-									fontSize: '0.8rem',
-								}}>
-								{user.phone}
-							</TableCell>
-							<TableCell
-								sx={{
-									width: 'max-content',
-									fontFamily: 'Work Sans',
-									fontWeight: '400',
-									whiteSpace: 'nowrap',
-									fontSize: '0.8rem',
-								}}>
-								{user.date_joined}
-							</TableCell>
-							<TableCell
-								sx={{
-									whiteSpace: 'nowrap',
-									position: 'relative',
-								}}>
-								<p
-									style={{
+								<TableCell
+									sx={{
+										width: 'max-content',
 										fontFamily: 'Work Sans',
 										fontWeight: '400',
+										whiteSpace: 'nowrap',
 										fontSize: '0.8rem',
-										backgroundColor:
-											user.status === 'Active'
-												? '#F3FCF6'
-												: user.status === 'Pending'
-												? '#FDF7E5'
-												: user.status === 'Inactive'
-												? '#F5F5F7'
-												: '#FCE3E7',
-										color:
-											user.status === 'Active'
-												? '#53D072'
-												: user.status === 'Pending'
-												? '#EBBB1C'
-												: user.status === 'Inactive'
-												? 'rgba(84, 95, 125, 1)'
-												: '#E4033B',
-										marginRight: '70px',
-										padding: '5px 10px',
-										borderRadius: '32%',
 									}}>
-									{user.status}
-								</p>
+									{user?.orgName}
+								</TableCell>
+								<TableCell
+									// align='center'
+									sx={{
+										width: 'max-content',
+										fontFamily: 'Work Sans',
+										fontWeight: '400',
+										whiteSpace: 'nowrap',
+										fontSize: '0.8rem',
+									}}>
+									{user?.userName}
+								</TableCell>
+								<TableCell
+									// align='center'
+									sx={{
+										width: 'max-content',
+										fontFamily: 'Work Sans',
+										fontWeight: '400',
+										whiteSpace: 'nowrap',
+										fontSize: '0.8rem',
+									}}>
+									{user.email}
+								</TableCell>
+								<TableCell
+									// align='center'
+									sx={{
+										width: 'max-content',
+										fontFamily: 'Work Sans',
+										fontWeight: '400',
+										whiteSpace: 'nowrap',
+										fontSize: '0.8rem',
+									}}>
+									{user?.phoneNumber}
+								</TableCell>
+								<TableCell
+									sx={{
+										width: 'max-content',
+										fontFamily: 'Work Sans',
+										fontWeight: '400',
+										whiteSpace: 'nowrap',
+										fontSize: '0.8rem',
+									}}>
+									{new Date(user?.createdAt).toLocaleString('en-US', options)}
+								</TableCell>
+								<TableCell
+									sx={{
+										whiteSpace: 'nowrap',
+										position: 'relative',
+									}}>
+									<p
+										style={{
+											fontFamily: 'Work Sans',
+											fontWeight: '400',
+											fontSize: '0.8rem',
+											backgroundColor:
+												user?.education.employmentStatus === 'Employed'
+													? '#F3FCF6'
+													: user?.education.employmentStatus === 'Pending'
+													? '#FDF7E5'
+													: user?.education.employmentStatus === 'Inactive'
+													? '#F5F5F7'
+													: '#FCE3E7',
+											color:
+												user?.education.employmentStatus === 'Employed'
+													? '#53D072'
+													: user?.education.employmentStatus === 'Pending'
+													? '#EBBB1C'
+													: user?.education.employmentStatus === 'Inactive'
+													? 'rgba(84, 95, 125, 1)'
+													: '#E4033B',
+											marginRight: '70px',
+											padding: '5px 10px',
+											borderRadius: '32%',
+										}}>
+										{user?.education.employmentStatus}
+									</p>
 
-								<img
-									src={verticalMenu}
-									style={{
-										position: 'absolute',
-										right: '30px',
-										top: '50%',
-										transform: 'translateY(-50%)',
-									}}
-									alt='vertical menu icon'
-								/>
-							</TableCell>
-						</TableRow>
-					))}
+									<img
+										src={verticalMenu}
+										style={{
+											position: 'absolute',
+											right: '30px',
+											top: '50%',
+											transform: 'translateY(-50%)',
+										}}
+										alt='vertical menu icon'
+									/>
+								</TableCell>
+							</TableRow>
+						))}
 					<tr>
 						<PaginationXD
 							postsPerPage={postsPerPage}
-							totalPosts={users.length}
+							totalPosts={usersdata.length}
 							paginate={paginate}
 						/>
 					</tr>
